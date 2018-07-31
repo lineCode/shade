@@ -1,4 +1,3 @@
-
 #version 330 core
 in  vec2 fPosition;
 out vec4 color;
