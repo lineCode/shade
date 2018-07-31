@@ -5,10 +5,17 @@
 #include <OpenGL/OpenGL.h>
 #include <OpenGL/gl3.h>
 
+struct float2 {
+  float x = 0.f;
+  float y = 0.f;
+};
+
 namespace window {
   struct parameters {
-    uint32_t width = 0;
-    uint32_t height = 0;
+    float2 size = (float2){
+      .x = 0,
+      .y = 0,
+    };
     bool     fullscreen = false;
   };
 
@@ -20,8 +27,8 @@ namespace window {
       "Shade",
       SDL_WINDOWPOS_UNDEFINED,
       SDL_WINDOWPOS_UNDEFINED,
-      parameters.width,
-      parameters.height,
+      parameters.size.x,
+      parameters.size.y,
       SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI
     );
 
@@ -58,7 +65,7 @@ namespace window {
 namespace gl {
   static void
   init
-  (const window::parameters &parameters)
+  (void)
   {
     GLuint vertexArray = 0;
     glGenVertexArrays(1, &vertexArray);
@@ -172,23 +179,33 @@ namespace gl {
   }
 }
 
-static void
-updateWindowViewport
+static float2
+getDrawableSize
 (SDL_Window *window)
 {
-  int sx = 0;
-  int sy = 0;
+  int sx = 0, sy = 0;
   SDL_GL_GetDrawableSize(window, &sx, &sy);
 
-  glViewport(0, 0, sx, sy);
+  return (float2) {
+    .x = (float) sx,
+    .y = (float) sy
+  };
 }
 
 static void
-updateShaderTimeUniform
-(GLuint program, float time)
+updateWindowViewport
+(const float2 size)
+{
+  glViewport(0, 0, size.x, size.y);
+}
+
+static void
+setShaderProgram
+(GLuint program, float time, const float2 size)
 {
   glUseProgram(program);
   glUniform1f(glGetUniformLocation(program, "uTime"), time);
+  glUniform2f(glGetUniformLocation(program, "uSize"), size.x, size.y);
 }
 
 int
@@ -196,8 +213,10 @@ main
 (int argc, char **argv)
 {
   const auto parameters = (window::parameters) {
-    .width = 500,
-    .height = 500,
+    .size = (float2) {
+      .x = 500,
+      .y = 500,
+    },
     .fullscreen = false,
   };
 
@@ -205,7 +224,7 @@ main
   if (NULL == window)
     return 1;
 
-  gl::init(parameters);
+  gl::init();
 
   GLuint program = gl::program::build();
   GLuint geometry = gl::geometry::build();
@@ -223,8 +242,9 @@ main
     if (!running)
       continue;
 
-    updateWindowViewport(window);
+    const auto size = getDrawableSize(window);
 
+    updateWindowViewport(size);
 
     glClear(GL_COLOR_BUFFER_BIT);
     glEnableVertexAttribArray(0);
@@ -232,7 +252,7 @@ main
     glBindBuffer(GL_ARRAY_BUFFER, geometry);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, NULL);
 
-    updateShaderTimeUniform(program, time);
+    setShaderProgram(program, time, size);
 
     glDrawArrays(GL_TRIANGLES, 0, 12);
     SDL_GL_SwapWindow(window);

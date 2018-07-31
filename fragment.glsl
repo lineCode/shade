@@ -3,6 +3,7 @@ in  vec2 fPosition;
 out vec4 color;
 
 uniform float uTime;
+uniform vec2 uSize;
 
 vec4
 fragment

@@ -1,4 +1,4 @@
-all: bin/shade
+all: test
 
 test: bin/shade
 	@bin/shade
