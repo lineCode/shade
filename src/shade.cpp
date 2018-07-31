@@ -58,7 +58,7 @@ namespace window {
 namespace gl {
   static void
   init
-  (void)
+  (const window::parameters &parameters)
   {
     GLuint vertexArray = 0;
     glGenVertexArrays(1, &vertexArray);
@@ -67,6 +67,7 @@ namespace gl {
     glClearColor(0.f, 0.f, 0.f, 1.f);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glViewport(0, 0, parameters.width, parameters.height);
   }
 
   namespace geometry {
@@ -172,22 +173,47 @@ namespace gl {
   }
 }
 
+static void
+updateWindowViewport
+(const SDL_Event &event)
+{
+  if (SDL_WINDOWEVENT_SIZE_CHANGED != event.window.event)
+    return;
+
+  const uint32_t size_x = event.window.data1;
+  const uint32_t size_y = event.window.data2;
+
+  glViewport(0, 0, size_x, size_y);
+}
+
+static void
+updateShaderTimeUniform
+(GLuint program, float time)
+{
+  glUseProgram(program);
+  glUniform1f(glGetUniformLocation(program, "uTime"), time);
+}
+
 int
 main
 (int argc, char **argv)
 {
-  SDL_Window *window = window::build((window::parameters){
-    .width = 1024,
-    .height = 768,
+  const auto parameters = (window::parameters) {
+    .width = 500,
+    .height = 500,
     .fullscreen = false,
-  });
+  };
 
+  SDL_Window *window = window::build(parameters);
   if (NULL == window)
     return 1;
 
-  gl::init();
+  gl::init(parameters);
+
   GLuint program = gl::program::build();
   GLuint geometry = gl::geometry::build();
+
+  float time = 0.f;
 
   bool running = true;
   while(running) {
@@ -195,18 +221,25 @@ main
     while (SDL_PollEvent(&event)) {
       if (event.type == SDL_QUIT)
         running = false;
+
+      if (event.type == SDL_WINDOWEVENT)
+        updateWindowViewport(event);
     }
 
     if (!running)
       continue;
 
     glClear(GL_COLOR_BUFFER_BIT);
-    glViewport(0, 0, 1024, 768);
     glEnableVertexAttribArray(0);
+
     glBindBuffer(GL_ARRAY_BUFFER, geometry);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, NULL);
-    glUseProgram(program);
+
+    updateShaderTimeUniform(program, time);
+
     glDrawArrays(GL_TRIANGLES, 0, 12);
     SDL_GL_SwapWindow(window);
+
+    time += 1.f/60.f;
   }
 }

@@ -2,13 +2,14 @@
 in  vec2 fPosition;
 out vec4 color;
 
-uniform vec2 uSize;
+uniform float uTime;
 
 vec4
 fragment
 (vec2 p)
 {
-  return vec4(1, p.x, p.y, 1);
+  float s = sin(uTime);
+  return vec4(s*s, p.x, p.y, 1);
 }
 
 void main()
