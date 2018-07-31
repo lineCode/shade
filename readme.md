@@ -36,7 +36,7 @@ a `vec4` representing the colour in RGBA format.
 2. `uSize` - a `vec2` containing the current dimensions of the viewport.
 
 ## todo
-1. ensure it works on something more than JustMyMachine (tm). (my machine is mac os yosemite)
+1. consider windows support
 1. add some more features
 1. ???
 1. PROFIT
