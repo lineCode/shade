@@ -2,6 +2,9 @@
 in  vec2 fPosition;
 out vec4 color;
 
+//based on the shader featured at:
+//https://www.shadertoy.com/view/XdlSDs
+
 uniform float uTime;
 uniform vec2 uSize;
 
