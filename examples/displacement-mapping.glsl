@@ -1,36 +1,30 @@
-#version 330 core
-in  vec2 fPosition;
-out vec4 color;
-
 //based on the shader featured at:
 //https://www.shadertoy.com/view/MtBSzd
 
-uniform float uTime;
-
 //Displacement Mapping with ray tracing
-#define PIXEL_SAMPLES 2
-#define MAX_DISPLACEMENT 5.0
-#define DISP_MAP_W 32
-#define DISP_MAP_H 32
+#define PIXEL_SAMPLES     2
+#define MAX_DISPLACEMENT  5.0
+#define DISP_MAP_W        32
+#define DISP_MAP_H        32
 #define SHADOW
-#define LIGHT_SAMPLES 2
-#define GAMMA 2.2
-#define SIN_WAVE  //comment this to use video as a displacement map
+#define LIGHT_SAMPLES     2
+#define GAMMA             2.2
+#define SIN_WAVE
 
 float displacementMultiplier;
 
 //used macros and constants
-#define HALF_PI       1.5707963
-#define PI           3.1415926
-#define TWO_PI         6.2831852
-#define FOUR_PI       12.566370
-#define INV_PI         0.3183099
-#define INV_TWO_PI       0.1591549
-#define INV_FOUR_PI     0.0795775
-#define EPSILON       0.0001
-#define IN_RANGE(x,a,b)    (((x) > (a)) && ((x) < (b)))
-#define EQUAL_FLT(a,b,eps)  (((a)>((b)-(eps))) && ((a)<((b)+(eps))))
-#define IS_ZERO(a)       EQUAL_FLT(a,0.0,EPSILON)
+#define HALF_PI             1.5707963
+#define PI                  3.1415926
+#define TWO_PI              6.2831852
+#define FOUR_PI             12.566370
+#define INV_PI              0.3183099
+#define INV_TWO_PI          0.1591549
+#define INV_FOUR_PI         0.0795775
+#define EPSILON             0.0001
+#define IN_RANGE(x, a, b)   (((x) > (a)) && ((x) < (b)))
+#define EQUAL_FLT(a, b, q)  (((a)>((b)-(q))) && ((a)<((b)+(q))))
+#define IS_ZERO(a)          EQUAL_FLT(a, 0.0, EPSILON)
 
 //********************************************
 // random number generator **********

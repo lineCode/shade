@@ -1,12 +1,5 @@
-#version 330 core
-in  vec2 fPosition;
-out vec4 color;
-
 //based on the shader featured at:
 //https://www.shadertoy.com/view/XdlSDs
-
-uniform float uTime;
-uniform vec2 uSize;
 
 vec4
 fragment
@@ -43,9 +36,4 @@ fragment
   uv = (2.0 * uv) - 1.0;
   float beamWidth = (0.7+0.5*cos(uv.x*10.0*tau*0.15*clamp(floor(5.0 + 10.0*cos(uTime)), 0.0, 10.0))) * abs(1.0 / (30.0 * uv.y));
   return vec4((beamWidth * horColour), 1.0);
-}
-
-void main()
-{
-  color.rgba = fragment(fPosition);
 }

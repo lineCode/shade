@@ -161,7 +161,20 @@ namespace gl {
     (void)
     {
       static const std::string fragmentShaderSource(
+        R"(
+          #version 330 core
+          in  vec2 fPosition;
+          out vec4 color;
+
+          uniform float uTime;
+          uniform vec2 uSize;
+        )"
+
         #include "build/fragment.glsl.h"
+        
+        R"(
+          void main() { color.rgba = fragment(fPosition); }
+        )"
       );
 
       static const std::string vertexShaderSource = R"(

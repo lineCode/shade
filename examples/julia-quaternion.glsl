@@ -1,19 +1,5 @@
-#version 330 core
-in  vec2 fPosition;
-out vec4 color;
-
 //based on the shader featured at:
 //https://www.shadertoy.com/view/MsfGRr
-
-uniform float uTime;
-
-// Created by inigo quilez - iq/2013
-// License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
-
-// A port of my 2007 demo Kindernoiser: https://www.youtube.com/watch?v=9AX8gNyrSWc (http://www.pouet.net/prod.php?which=32549)
-//
-// More (oudated, half broken) info here:  http://iquilezles.org/www/articles/juliasets3d/juliasets3d.htm
-
 
 // antialais level (1, 2, 3...)
 #define AA 1
