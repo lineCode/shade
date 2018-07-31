@@ -1,9 +1,16 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string>
+
 #include <SDL2/SDL.h>
-#include <OpenGL/OpenGL.h>
-#include <OpenGL/gl3.h>
+
+#if defined(__APPLE__)
+  #include <OpenGL/OpenGL.h>
+  #include <OpenGL/gl3.h>
+#else
+  #define GL_GLEXT_PROTOTYPES
+  #include <GL/glx.h>
+#endif
 
 struct float2 {
   float x = 0.f;
@@ -16,7 +23,7 @@ namespace window {
       .x = 0,
       .y = 0,
     };
-    bool     fullscreen = false;
+    bool   fullscreen = false;
   };
 
   static SDL_Window *
@@ -214,8 +221,8 @@ main
 {
   const auto parameters = (window::parameters) {
     .size = (float2) {
-      .x = 500,
-      .y = 500,
+      .x = 2560,
+      .y = 1440,
     },
     .fullscreen = false,
   };
