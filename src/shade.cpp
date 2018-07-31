@@ -22,7 +22,7 @@ namespace window {
       SDL_WINDOWPOS_UNDEFINED,
       parameters.width,
       parameters.height,
-      SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE
+      SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI
     );
 
     if (NULL == result)
@@ -67,7 +67,6 @@ namespace gl {
     glClearColor(0.f, 0.f, 0.f, 1.f);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glViewport(0, 0, parameters.width, parameters.height);
   }
 
   namespace geometry {
@@ -175,15 +174,13 @@ namespace gl {
 
 static void
 updateWindowViewport
-(const SDL_Event &event)
+(SDL_Window *window)
 {
-  if (SDL_WINDOWEVENT_SIZE_CHANGED != event.window.event)
-    return;
+  int sx = 0;
+  int sy = 0;
+  SDL_GL_GetDrawableSize(window, &sx, &sy);
 
-  const uint32_t size_x = event.window.data1;
-  const uint32_t size_y = event.window.data2;
-
-  glViewport(0, 0, size_x, size_y);
+  glViewport(0, 0, sx, sy);
 }
 
 static void
@@ -221,13 +218,13 @@ main
     while (SDL_PollEvent(&event)) {
       if (event.type == SDL_QUIT)
         running = false;
-
-      if (event.type == SDL_WINDOWEVENT)
-        updateWindowViewport(event);
     }
 
     if (!running)
       continue;
+
+    updateWindowViewport(window);
+
 
     glClear(GL_COLOR_BUFFER_BIT);
     glEnableVertexAttribArray(0);
