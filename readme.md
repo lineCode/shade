@@ -12,6 +12,19 @@ modify `fragment.glsl` as you see fit, checkout your shader with `make`. the pro
 install with your favorite package manager or installation method. just ensure that appropriate include paths and library paths are defined.
 
 ## fragment shader
+### format
+the code is designed to handle fragment shaders of the form;
+
+```glsl
+vec4
+fragment
+(vec2 p)
+{
+  vec4 result = /* some math */;
+
+  return result;
+}
+```
 ### input
 a `vec2` containing the fragment's normalised coordinates in the viewport - i.e between 0 and 1, in `x` and `y`. this is different to shadertoy, which gives you screen coordinates.
 
