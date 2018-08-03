@@ -35,6 +35,29 @@ a `vec4` representing the colour in RGBA format.
 1. `uTime` - a `float` containing the number of seconds elapsed since the program began execution.
 2. `uSize` - a `vec2` containing the current dimensions of the viewport.
 
+## examples
+there are some examples stolen borrowed from shadertoy included with this - they should be somewhat accurate renditions of the shaders found there.
+
+to try these out for yourself, just copy over `fragment.glsl` with them, e.g
+
+```
+$ cp examples/light-ring.glsl fragment.glsl
+$ make
+```
+
+### displacement mapping
+from [shadertoy](https://www.shadertoy.com/view/MtBSzd):
+![screenshot](./img/displacement-mapping.png "displacement mapping example")
+
+### julia quarternion
+from [shadertoy](https://www.shadertoy.com/view/MsfGRr):
+![screenshot](./img/julia-quarternion.png "julia quarternion example")
+
+### light ring
+from [shadertoy](https://www.shadertoy.com/view/XdlSDs):
+![screenshot](./img/light-ring.png "light ring example")
+
+
 ## todo
 1. consider windows support
 1. add some more features
