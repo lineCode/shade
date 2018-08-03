@@ -242,23 +242,10 @@ main
   GLuint program = gl::program::build();
   GLuint geometry = gl::geometry::build();
 
+  //not real time. each frame increments this by 1/60. might need to adjust for fancy monitors..
   float time = 0.f;
-
   bool running = true;
   while(running) {
-    SDL_Event event;
-    while (SDL_PollEvent(&event)) {
-      if (event.type == SDL_QUIT)
-        running = false;
-
-      if (event.type == SDL_KEYUP)
-      if (event.key.keysym.sym == SDLK_ESCAPE)
-        running = false;
-    }
-
-    if (!running)
-      continue;
-
     const auto size = getDrawableSize(window);
 
     glViewport(0, 0, size.x, size.y);
@@ -276,5 +263,15 @@ main
 
     //don't want to run into precision issues! :D
     time = (time < 3600.f) ? (time + 1.f/60.f) : 0.f;
+
+    SDL_Event event;
+    while (SDL_PollEvent(&event)) {
+      if (event.type == SDL_QUIT)
+        running = false;
+
+      if (event.type == SDL_KEYUP)
+      if (event.key.keysym.sym == SDLK_ESCAPE)
+        running = false;
+    }
   }
 }
