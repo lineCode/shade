@@ -2,7 +2,7 @@
 shader-toy-like fragment shader development assistant tool. blockchain.
 
 ## what
-it's like shader-toy, but with basically no features of shader-toy. but you can run it off-line, and not in a browser. it has only one dependancy - SDL2. this is not intended to be a standalone tool per se, but rather just something that you can easily modify (and extend, if required) to prototype a shader.
+it's like shader-toy, but with basically no features of shader-toy. but you can run it off-line, and not in a browser. it has only one dependency - SDL2. this is not intended to be a standalone tool per se, but rather just something that you can easily modify (and extend, if required) to prototype a shader.
 
 ## usage
 modify `fragment.glsl` as you see fit, checkout your shader with `make`. the program takes no arguments - just edit the code :)
@@ -33,7 +33,7 @@ a `vec2` containing the fragment's normalised coordinates in the viewport - i.e 
 a `vec4` representing the colour in RGBA format.
 
 ### globals
-1. `uTime` - a `float` containing the number of seconds elapsed since the program began execution.
+1. `uTime` - a `float` containing the number of seconds elapsed since the program began execution. sort of.
 2. `uSize` - a `vec2` containing the current dimensions of the viewport.
 
 ## examples
@@ -51,10 +51,10 @@ from [shadertoy](https://www.shadertoy.com/view/MtBSzd):
 
 ![screenshot](./img/displacement-mapping.png "displacement mapping example")
 
-### julia quarternion
+### julia quaternion
 from [shadertoy](https://www.shadertoy.com/view/MsfGRr):
 
-![screenshot](./img/julia-quarternion.png "julia quarternion example")
+![screenshot](./img/julia-quarternion.png "julia quaternion example")
 
 ### light ring
 from [shadertoy](https://www.shadertoy.com/view/XdlSDs):
