@@ -1,15 +1,15 @@
 # shade
 shader-toy-like fragment shader development assistant tool. blockchain.
 
-## why
-it's like shader-toy, but with basically no features of shader-toy. but you can run it off-line, and not in a browser, and has only one dependancy - SDL2. this is not intended to be a standalone tool, but rather just something that you can easily modify (and extend, if required) to prototype a shader.
+## what
+it's like shader-toy, but with basically no features of shader-toy. but you can run it off-line, and not in a browser. it has only one dependancy - SDL2. this is not intended to be a standalone tool per se, but rather just something that you can easily modify (and extend, if required) to prototype a shader.
 
 ## usage
 modify `fragment.glsl` as you see fit, checkout your shader with `make`. the program takes no arguments - just edit the code :)
 
 ## requirements
 ### sdl2
-install with your favorite package manager or installation method. just ensure that appropriate include paths and library paths are defined.
+install with your favorite package manager or installation method. most sane installation methods put the headers in your default include path. no need for none of this `pkg-config` nonsense.
 
 ## fragment shader
 ### format
@@ -25,6 +25,7 @@ fragment
   return result;
 }
 ```
+
 ### input
 a `vec2` containing the fragment's normalised coordinates in the viewport - i.e between 0 and 1, in `x` and `y`. this is different to shadertoy, which gives you screen coordinates.
 
