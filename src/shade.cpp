@@ -234,8 +234,8 @@ main
 {
   const auto parameters = (window::parameters) {
     .size = (float2) {
-      .x = 2560,
-      .y = 1440,
+      .x = 512,
+      .y = 512,
     },
     .fullscreen = false,
   };
