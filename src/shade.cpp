@@ -96,7 +96,8 @@ namespace gl {
       GLuint result = 0;
       glGenBuffers(1, &result);
       glBindBuffer(GL_ARRAY_BUFFER, result);
-      glBufferData(GL_ARRAY_BUFFER,
+      glBufferData(
+        GL_ARRAY_BUFFER,
         sizeof(vertexPositions),
         vertexPositions,
         GL_STATIC_DRAW
