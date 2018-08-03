@@ -213,13 +213,6 @@ getDrawableSize
 }
 
 static void
-updateWindowViewport
-(const float2 size)
-{
-  glViewport(0, 0, size.x, size.y);
-}
-
-static void
 setShaderProgram
 (GLuint program, float time, const float2 size)
 {
@@ -257,6 +250,10 @@ main
     while (SDL_PollEvent(&event)) {
       if (event.type == SDL_QUIT)
         running = false;
+
+      if (event.type == SDL_KEYUP)
+      if (event.key.keysym.sym == SDLK_ESCAPE)
+        running = false;
     }
 
     if (!running)
@@ -264,7 +261,7 @@ main
 
     const auto size = getDrawableSize(window);
 
-    updateWindowViewport(size);
+    glViewport(0, 0, size.x, size.y);
 
     glClear(GL_COLOR_BUFFER_BIT);
     glEnableVertexAttribArray(0);
@@ -277,6 +274,7 @@ main
     glDrawArrays(GL_TRIANGLES, 0, 12);
     SDL_GL_SwapWindow(window);
 
-    time += 1.f/60.f;
+    //don't want to run into precision issues! :D
+    time = (time < 3600.f) ? (time + 1.f/60.f) : 0.f;
   }
 }

@@ -1,3 +1,5 @@
+include platform.make
+
 all: test
 
 test: bin/shade
@@ -6,7 +8,7 @@ test: bin/shade
 bin/shade: src/shade.cpp build/fragment.glsl.h
 	@echo "C++ $<"
 	@mkdir -p bin
-	@clang++ -std=c++14 -Os -I. $< -o $@ -lSDL2 -lGL
+	@$(cxx) -std=c++14 -Os -I. $< -o $@ $(ldflags)
 
 build/fragment.glsl.h: fragment.glsl scripts/headerify.sh
 	@echo "HDR $<"

@@ -382,8 +382,3 @@ fragment
     
   return vec4( accumulatedColor,1.0 );
 }
-
-void main()
-{
-  color.rgba = fragment(fPosition);
-}

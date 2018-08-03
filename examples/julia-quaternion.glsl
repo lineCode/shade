@@ -223,8 +223,3 @@ fragment
     
   return vec4( col, 1.0 );
 }
-
-void main()
-{
-  color.rgba = fragment(fPosition);
-}
