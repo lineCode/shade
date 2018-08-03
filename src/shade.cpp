@@ -125,6 +125,7 @@ namespace gl {
           char errorMessage[len+1];
           glGetShaderInfoLog(result, len, NULL, errorMessage);
           printf("Error: Couldn't build shader:\n %s", errorMessage);
+          return 0;
         }
 
         return result;
@@ -135,12 +136,18 @@ namespace gl {
     link
     (GLuint vertexShader, GLuint fragmentShader)
     {
+      if (0 == vertexShader || 0 == fragmentShader)
+        return 0;
+
       GLuint result = glCreateProgram();
-      glAttachShader(result, vertexShader); glAttachShader(result, fragmentShader);
+      glAttachShader(result, vertexShader);
+      glAttachShader(result, fragmentShader);
       glLinkProgram(result);
 
-      glDetachShader(result, vertexShader); glDetachShader(result, fragmentShader);
-      glDeleteShader(vertexShader);         glDeleteShader(fragmentShader);
+      glDetachShader(result, vertexShader);
+      glDetachShader(result, fragmentShader);
+      glDeleteShader(vertexShader);
+      glDeleteShader(fragmentShader);
 
       GLint ret = GL_FALSE;
       glGetProgramiv(result, GL_LINK_STATUS, &ret);
@@ -239,12 +246,12 @@ main
 
   gl::init();
 
-  GLuint program = gl::program::build();
   GLuint geometry = gl::geometry::build();
+  GLuint program = gl::program::build();
 
   //not real time. each frame increments this by 1/60. might need to adjust for fancy monitors..
   float time = 0.f;
-  bool running = true;
+  bool running = (program != 0);
   while(running) {
     const auto size = getDrawableSize(window);
 

@@ -156,11 +156,7 @@ Ray genRay( in Camera camera, in vec2 pixel ) {
 #define PIXEL2UV(x,y) vec2( float(x)/float(DISP_MAP_W), float(y)/float(DISP_MAP_H) )
 float getDisplacement(vec2 uv){
     
-#ifdef SIN_WAVE
     return (sin(uTime-length(vec2(0.5,0.5) - uv)*20.0)+1.0)/2.0;
-#else
-    return texture( iChannel0, uv ).x;
-#endif
 }
 
 void getPixelDisplacements( vec2 uv, out float d1, out float d2, out float d3, out float d4 ) {
