@@ -9,7 +9,7 @@ modify `fragment.glsl` as you see fit, checkout your shader with `make`. the pro
 
 ## requirements
 ### sdl2
-install with your favorite package manager or installation method. most sane installation methods put the headers in your default include path. no need for none of this `pkg-config` nonsense.
+install with your favorite package manager or installation method. most sane installation methods put the headers in your default include path. no need for any of this `pkg-config` nonsense.
 
 ## fragment shader
 ### format
